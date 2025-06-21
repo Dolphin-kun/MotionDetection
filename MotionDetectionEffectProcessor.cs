@@ -44,6 +44,7 @@ namespace MotionDetection
 
             double thresh = item.Thresh.GetValue(frame, length, fps) / 100 * 255.0;
             double blurSize = item.Blur.GetValue(frame, length, fps);
+            double thickness = item.Thickness.GetValue(frame, length, fps);
             double skipNoiseSize = item.SkipNoiseSize.GetValue(frame, length, fps) * 10;
 
             var dc = devices.DeviceContext;
@@ -108,7 +109,7 @@ namespace MotionDetection
                 {
                     if (Cv2.ContourArea(contour) < skipNoiseSize) continue;
                     var rect = Cv2.BoundingRect(contour);
-                    Cv2.Rectangle(result, rect, new Scalar(item.Color.B, item.Color.G, item.Color.R, item.Color.A), 2); // 緑色, 太さ2px
+                    Cv2.Rectangle(result, rect, new Scalar(item.Color.B, item.Color.G, item.Color.R, item.Color.A), (int)thickness);
                 }
             }
 
